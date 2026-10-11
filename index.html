@@ -888,6 +888,65 @@ function loadPersonalizedInvitation() {
 
 initializeWedding();
 loadPersonalizedInvitation();
+/* 🎊 CONGRATULATIONS CELEBRATION */
+
+function startWeddingCelebration() {
+  const overlay = document.getElementById("celebrationOverlay");
+  if (!overlay) return;
+
+  overlay.replaceChildren();
+
+  const title = document.createElement("div");
+  title.className = "celebration-title";
+  title.textContent = "🎉 CONGRATULATIONS! 🎉";
+  overlay.appendChild(title);
+
+  const colors = [
+    "#ff3158",
+    "#ffd447",
+    "#45e6a5",
+    "#47b8ff",
+    "#e879ff",
+    "#ffffff"
+  ];
+
+  for (let i = 0; i < 110; i++) {
+    const piece = document.createElement("span");
+    piece.className = "celebration-piece";
+
+    piece.textContent = Math.random() > 0.75 ? "✦" : "";
+
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.backgroundColor =
+      colors[Math.floor(Math.random() * colors.length)];
+
+    piece.style.width = 5 + Math.random() * 9 + "px";
+    piece.style.height = 8 + Math.random() * 13 + "px";
+
+    piece.style.setProperty(
+      "--duration",
+      2.5 + Math.random() * 3 + "s"
+    );
+
+    piece.style.setProperty(
+      "--drift",
+      (Math.random() * 240 - 120) + "px"
+    );
+
+    piece.style.setProperty(
+      "--spin",
+      (Math.random() * 1200 - 600) + "deg"
+    );
+
+    piece.style.animationDelay = Math.random() * 1.2 + "s";
+
+    overlay.appendChild(piece);
+  }
+
+  setTimeout(function() {
+    overlay.replaceChildren();
+  }, 6500);
+}
 </script>
 
 </body>
