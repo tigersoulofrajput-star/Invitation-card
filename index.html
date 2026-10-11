@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Wedding Invitation</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Georgia,serif;
+ background:#310714;
+ color:#fff0ce;
+ text-align:center;
+}
+.page{
+ display:none;
+ min-height:100vh;
+ padding:25px 15px;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+}
+.page.active{display:flex}
+.card{
+ width:100%;
+ max-width:500px;
+ padding:30px 20px;
+ border:2px solid #d9b45b;
+ border-radius:20px;
+ background:linear-gradient(145deg,#650f2c,#26050f);
+ box-shadow:0 0 30px #d9b45b44;
+}
+h1{color:#f5d483;font-size:clamp(30px,8vw,43px)}
+h2{color:#f5d483}
+p{font-size:17px;line-height:1.8}
+.gold{color:#f5d483}
+button{
+ background:#e3bd67;
+ color:#390817;
+ border:0;
+ border-radius:30px;
+ padding:13px 22px;
+ margin:8px 4px;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
+}
+button:hover{background:#ffe6a1}
+input,textarea,select{
+ width:100%;
+ padding:12px;
+ margin:8px 0;
+ border:1px solid #d9b45b;
+ border-radius:8px;
+ font-size:16px;
+ background:#fffaf0;
+ color:#310714;
+}
+textarea{min-height:100px}
+hr{border:0;border-top:1px solid #d9b45b;margin:22px 0}
+.ornament{font-size:35px;color:#f5d483}
+.small{font-size:13px;opacity:.85}
+#petals span{
+ position:fixed;
+ top:-30px;
+ z-index:5;
+ pointer-events:none;
+ animation:fall linear forwards;
+}
+@keyframes fall{
+ to{transform:translateY(110vh) rotate(650deg);opacity:.2}
+}
+.food{
+ width:100%;
+ max-width:330px;
+ border-radius:14px;
+ margin:10px auto;
+ display:block;
+}
+a{color:#ffe5a3;overflow-wrap:anywhere}
+#generatedLinks p{overflow-wrap:anywhere}
+</style>
+</head>
+
+<body>
+<div id="petals"></div>
+
+<!-- PAGE 1: COVER -->
+<section class="page active" id="page1">
+ <div class="card">
+  <div class="ornament">❦ ❀ ❦</div>
+  <p class="gold">TOGETHER WITH THEIR FAMILIES</p>
+  <h1>A Royal Wedding</h1>
+  <hr>
+  <p>Two hearts, one beautiful journey.</p>
+  <p class="gold">You are warmly invited to celebrate</p>
+  <h2 id="coverNames">Aarav & Diya</h2>
+  <p>Love • Laughter • Happily Ever After</p>
+  <div class="ornament">❦</div>
+  <button onclick="openInvitation()">Open Invitation ✨</button>
+ </div>
+</section>
+
+<!-- PAGE 2: COUPLE AND EVENTS -->
+<section class="page" id="page2">
+ <div class="card">
+  <div class="ornament">✧ ❀ ✧</div>
+  <p>WITH LOVE AND BLESSINGS</p>
+  <h1 id="coupleNames">Aarav Sharma<br>&<br>Diya Das</h1>
+  <p>request the pleasure of your company<br>at their wedding celebration.</p>
+  <hr>
+  <h2>Wedding Celebrations</h2>
+  <p><b class="gold">Haldi Ceremony</b><br><span id="haldiDate"></span></p>
+  <p><b class="gold">Wedding Ceremony</b><br><span id="weddingDate"></span></p>
+  <p><b class="gold">Reception</b><br><span id="receptionDate"></span></p>
+  <button onclick="showPage(1)">← Back</button>
+  <button onclick="showPage(3)">Next →</button>
+ </div>
+</section>
+
+<!-- PAGE 3: PERSONAL INVITATION -->
+<section class="page" id="page3">
+ <div class="card">
+  <div class="ornament">❦</div>
+  <h1>A Special Invitation</h1>
+  <p>Dear</p>
+  <h2 id="guestName">Our Beloved Guest</h2>
+  <p id="guestMessage">
+   Your presence will make our special day even more memorable.
+   Please join us as we begin this beautiful journey together.
+  </p>
+  <p class="gold">Your presence is our greatest gift ❤️</p>
+  <button onclick="showPage(2)">← Back</button>
+  <button onclick="showPage(4)">Venue →</button>
+ </div>
+</section>
+
+<!-- PAGE 4: VENUE -->
+<section class="page" id="page4">
+ <div class="card">
+  <div class="ornament">⌖</div>
+  <h1>Wedding Venue</h1>
+  <h2 id="venueName">Royal Garden</h2>
+  <p id="venueAddress">Guwahati, Assam, India</p>
+  <p><b class="gold">Wedding Time</b><br><span id="weddingTime">6:00 PM onwards</span></p>
+  <p>Please join us and bless the couple.</p>
+  <button onclick="openMaps()">📍 Get Directions</button>
+  <hr>
+  <button onclick="showPage(3)">← Back</button>
+  <button onclick="showPage(5)">Food Menu →</button>
+ </div>
+</section>
+
+<!-- PAGE 5: FOOD AND THANK YOU -->
+<section class="page" id="page5">
+ <div class="card">
+  <div class="ornament">✧ ❀ ✧</div>
+  <h1>A Feast of Love</h1>
+  <p>Delicious food and beautiful memories await!</p>
+  <img class="food"
+   src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80"
+   alt="Wedding food">
+  <h2>Menu Highlights</h2>
+  <p id="foodMenu">Welcome Drinks • Starters • Main Course • Desserts</p>
+  <hr>
+  <h2>Thank You ❤️</h2>
+  <p>We look forward to celebrating this beautiful occasion with you.</p>
+  <p class="gold">With love, the families of the bride and groom</p>
+  <button onclick="showPage(4)">← Back</button>
+  <button onclick="showPage(1)">Back to Cover ♡</button>
+ </div>
+</section>
+
+<!-- GENERATOR -->
+<section class="page" id="generator">
+ <div class="card">
+  <div class="ornament">❦ ❀ ❦</div>
+  <h1>Invitation Link Generator</h1>
+  <p>Create a personal invitation for each guest.</p>
+
+  <label for="names"><b>Guest names</b></label>
+  <textarea id="names" placeholder="Example:
+The Sharma Family
+Rahul Verma
+Priya Das"></textarea>
+  <p class="small">Enter one guest or family name per line.</p>
+
+  <label for="messageType"><b>Choose invitation message</b></label>
+  <select id="messageType" onchange="toggleCustom()">
+   <option value="ready">Ready-made message</option>
+   <option value="custom">Write my own message</option>
+  </select>
+
+  <div id="customBox" style="display:none">
+   <label for="customMessage"><b>Your custom message</b></label>
+   <textarea id="customMessage"
+    placeholder="Write your invitation message here..."></textarea>
+  </div>
+
+  <button onclick="generateLinks()">Generate Guest Links ✨</button>
+  <button onclick="previewGuest()">Preview Invitation</button>
+  <div id="generatedLinks"></div>
+
+  <hr>
+  <p class="small">
+   Important: Publish this website on GitHub Pages before generating
+   links for guests. Links created from a local file will not be public.
+  </p>
+  <button onclick="showPage(1)">View Wedding Invitation</button>
+ </div>
+</section>
+
+<script>
+/* ==========================================
+   EDIT YOUR WEDDING DETAILS HERE
+   ========================================== */
+const WEDDING = {
+ bride: "Diya Das",
+ groom: "Aarav Sharma",
+ haldi: "10 December 2026",
+ wedding: "12 December 2026",
+ reception: "13 December 2026",
+ venue: "Royal Garden",
+ address: "Guwahati, Assam, India",
+ time: "6:00 PM onwards",
+ mapsQuery: "Royal Garden Guwahati Assam",
+ menu: "Welcome Drinks • Starters • Main Course • Desserts"
+};
+
+const READY_MESSAGE =
+ "Dear {name}, you and your family are warmly invited to celebrate " +
+ WEDDING.groom + " and " + WEDDING.bride +
+ "'s wedding. Your presence and blessings will make this special " +
+ "occasion even more memorable. We look forward to celebrating with you!";
+
+function applyWeddingDetails(){
+ document.title = WEDDING.groom + " & " + WEDDING.bride +
+  " | Wedding Invitation";
+
+ document.getElementById("coverNames").textContent =
+  WEDDING.groom.split(" ")[0] + " & " + WEDDING.bride.split(" ")[0];
+
+ document.getElementById("coupleNames").innerHTML =
+  escapeHTML(WEDDING.groom) + "<br>&<br>" + escapeHTML(WEDDING.bride);
+
+ document.getElementById("haldiDate").textContent = WEDDING.haldi;
+ document.getElementById("weddingDate").textContent = WEDDING.wedding;
+ document.getElementById("receptionDate").textContent = WEDDING.reception;
+ document.getElementById("venueName").textContent = WEDDING.venue;
+ document.getElementById("venueAddress").textContent = WEDDING.address;
+ document.getElementById("weddingTime").textContent = WEDDING.time;
+ document.getElementById("foodMenu").textContent = WEDDING.menu;
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g, function(ch){
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[ch];
+ });
+}
+
+function showPage(number){
+ document.querySelectorAll(".page").forEach(function(page){
+  page.classList.remove("active");
+ });
+ document.getElementById("page"+number).classList.add("active");
+ window.scrollTo(0,0);
+}
+
+function openInvitation(){
+ showPage(2);
+ makePetals();
+ playChime();
+}
+
+function makePetals(){
+ const container = document.getElementById("petals");
+ for(let i=0;i<24;i++){
+  const petal = document.createElement("span");
+  petal.textContent = ["🌸","🌺","✨","🌼"][Math.floor(Math.random()*4)];
+  petal.style.left = Math.random()*100+"vw";
+  petal.style.animationDuration = (3+Math.random()*5)+"s";
+  petal.style.fontSize = (12+Math.random()*15)+"px";
+  container.appendChild(petal);
+  setTimeout(function(){petal.remove()},8500);
+ }
+}
+
+function playChime(){
+ try{
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if(!AudioContext)return;
+  const ctx = new AudioContext();
+  [523.25,659.25,783.99].forEach(function(freq,index){
+   const osc = ctx.createOscillator();
+   const gain = ctx.createGain();
+   osc.type = "sine";
+   osc.frequency.value = freq;
+   gain.gain.setValueAtTime(0.0001,ctx.currentTime+index*0.12);
+   gain.gain.exponentialRampToValueAtTime(0.08,ctx.currentTime+index*0.12+0.03);
+   gain.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+index*0.12+0.5);
+   osc.connect(gain);
+   gain.connect(ctx.destination);
+   osc.start(ctx.currentTime+index*0.12);
+   osc.stop(ctx.currentTime+index*0.12+0.55);
+  });
+ }catch(e){}
+}
+
+function openMaps(){
+ const url = "https://www.google.com/maps/search/?api=1&query=" +
+  encodeURIComponent(WEDDING.mapsQuery || WEDDING.address);
+ window.open(url,"_blank");
+}
+
+function toggleCustom(){
+ const isCustom = document.getElementById("messageType").value === "custom";
+ document.getElementById("customBox").style.display = isCustom ? "block" : "none";
+}
+
+function getBaseURL(){
+ const url = new URL(window.location.href);
+ url.search = "";
+ url.hash = "";
+ return url.href;
+}
+
+function createGuestURL(name,message){
+ const url = new URL(getBaseURL());
+ url.searchParams.set("guest",name);
+ url.searchParams.set("message",message);
+ return url.href;
+}
+
+function generateLinks(){
+ const namesText = document.getElementById("names").value.trim();
+ const output = document.getElementById("generatedLinks");
+ output.innerHTML = "";
+
+ if(!namesText){
+  alert("Please enter at least one guest name.");
+  return;
+ }
+
+ const names = namesText.split(/\n/).map(n=>n.trim()).filter(Boolean);
+ const custom = document.getElementById("messageType").value === "custom";
+ const customText = document.getElementById("customMessage").value.trim();
+
+ if(custom && !customText){
+  alert("Please write your custom message.");
+  return;
+ }
+
+ names.forEach(function(name,index){
+  const message = custom
+   ? customText.replace(/\{name\}/g,name)
+   : READY_MESSAGE.replace(/\{name\}/g,name);
+
+  const link = createGuestURL(name,message);
+  const item = document.createElement("div");
+  item.style.margin = "20px 0";
+  item.style.padding = "12px";
+  item.style.border = "1px solid #d9b45b";
+  item.style.borderRadius = "12px";
+
+  const heading = document.createElement("h3");
+  heading.textContent = name;
+
+  const anchor = document.createElement("a");
+  anchor.href = link;
+  anchor.target = "_blank";
+  anchor.rel = "noopener";
+  anchor.textContent = "Open Invitation Link";
+
+  const copyButton = document.createElement("button");
+  copyButton.textContent = "Copy Link 📋";
+  copyButton.onclick = function(){copyText(link,copyButton)};
+
+  const whatsappButton = document.createElement("button");
+  whatsappButton.textContent = "Share on WhatsApp";
+  whatsappButton.onclick = function(){
+   const text = "Wedding invitation for " + name + ":\n" + link;
+   window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank");
+  };
+
+  item.appendChild(heading);
+  item.appendChild(anchor);
+  item.appendChild(document.createElement("br"));
+  item.appendChild(copyButton);
+  item.appendChild(whatsappButton);
+  output.appendChild(item);
+ });
+}
+
+async function copyText(text,button){
+ try{
+  await navigator.clipboard.writeText(text);
+  button.textContent = "Copied! ✓";
+ }catch(e){
+  const field = document.createElement("textarea");
+  field.value = text;
+  field.style.position = "fixed";
+  field.style.opacity = "0";
+  document.body.appendChild(field);
+  field.select();
+  const ok = document.execCommand("copy");
+  field.remove();
+  button.textContent = ok ? "Copied! ✓" : "Please copy the link manually";
+ }
+}
+
+function previewGuest(){
+ const names = document.getElementById("names").value
+  .split(/\n/).map(n=>n.trim()).filter(Boolean);
+ const name = names[0] || "Our Beloved Guest";
+ const custom = document.getElementById("messageType").value === "custom";
+ const customText = document.getElementById("customMessage").value.trim();
+
+ if(custom && !customText){
+  alert("Please write your custom message.");
+  return;
+ }
+
+ const message = custom
+  ? customText.replace(/\{name\}/g,name)
+  : READY_MESSAGE.replace(/\{name\}/g,name);
+
+ document.getElementById("guestName").textContent = name;
+ document.getElementById("guestMessage").textContent = message;
+ showPage(3);
+}
+
+function loadGuestInvitation(){
+ const params = new URLSearchParams(window.location.search);
+ const guest = params.get("guest");
+ const message = params.get("message");
+
+ if(guest){
+  document.getElementById("guestName").textContent = guest;
+  document.getElementById("guestMessage").textContent =
+   message || READY_MESSAGE.replace(/\{name\}/g,guest);
+  showPage(1);
+ }
+}
+
+applyWeddingDetails();
+loadGuestInvitation();
+</script>
+</body>
+</html>
