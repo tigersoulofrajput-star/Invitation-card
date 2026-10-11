@@ -571,15 +571,24 @@ function showPage(number) {
     page.classList.remove("active");
   });
 
-  const target = document.getElementById("page" + number);
+  let target;
+
+  if (number === "generator") {
+    target = document.getElementById("generator");
+  } else {
+    target = document.getElementById("page" + number);
+  }
 
   if (target) {
     target.classList.add("active");
   }
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-}
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+  }
+  
 function openInvitation() {
   showPage(2);
   createPetals();
