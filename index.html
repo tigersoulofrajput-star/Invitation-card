@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#4b1020">
+<title>EverAfter — Wedding Invitation</title>
+<style>
+:root{--wine:#4b1020;--wine2:#741f35;--gold:#d7b36a;--cream:#fff8ed;--ink:#2b1a1d;--muted:#76656a;--green:#243d32}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fbf4e9;color:var(--ink);font-family:Georgia,'Times New Roman',serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 5%;background:var(--wine);color:#fff8ed}
+.brand{font-size:20px;letter-spacing:2px}.brand small{display:block;color:var(--gold);font:10px Arial,sans-serif;letter-spacing:3px;margin-top:4px}
+.pill{border:1px solid #d7b36a88;border-radius:99px;padding:8px 12px;font:11px Arial,sans-serif;letter-spacing:1px;color:var(--gold)}
+.page{max-width:1080px;margin:28px auto;padding:0 16px}
+.panel{background:#fffdf8;border:1px solid #e8d8b8;border-radius:20px;box-shadow:0 15px 45px #4b102012;overflow:hidden}
+.panel-head{padding:28px 28px 18px;background:linear-gradient(120deg,#4b1020,#74263a);color:#fff8ed}
+.eyebrow{font:11px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3,p{margin-top:0}
+.panel-head h1{font-size:clamp(28px,5vw,42px);font-weight:normal;margin:12px 0 8px}
+.panel-head p{margin:0;color:#f3e5d4;line-height:1.6}
+.formbody{padding:24px 28px 30px}
+label{display:block;font:12px Arial,sans-serif;font-weight:bold;letter-spacing:.5px;color:#5c3d43;margin-bottom:8px}
+input,textarea,select{width:100%;border:1px solid #dfcfb8;background:#fffdf9;border-radius:10px;padding:13px 14px;color:var(--ink);outline:none}
+input:focus,textarea:focus,select:focus{border-color:#a56c40;box-shadow:0 0 0 3px #d7b36a25}
+textarea{min-height:105px;resize:vertical;line-height:1.5}
+.field{margin-bottom:18px}
+.hint{font:12px Arial,sans-serif;color:var(--muted);line-height:1.55;margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 22px}
+.mode-card{border:1px solid #e1d1b9;border-radius:14px;padding:15px;background:#fffaf2;display:flex;gap:10px;align-items:flex-start}
+.mode-card input{width:auto;margin-top:4px;accent-color:var(--wine)}
+.mode-card strong{display:block;font-size:15px;margin-bottom:5px}.mode-card span{font:12px Arial,sans-serif;color:var(--muted);line-height:1.45}
+.btn{border:0;border-radius:999px;padding:14px 20px;background:linear-gradient(110deg,#a87936,#e3c985);color:#3d1b20;font-weight:bold;box-shadow:0 6px 18px #7a4e2825}
+.btn.secondary{background:var(--wine);color:#fff8ed;box-shadow:none}
+.btn.ghost{background:transparent;border:1px solid #d7b36a;color:var(--wine);box-shadow:none}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.note{background:#f7eedf;border-left:3px solid var(--gold);padding:12px 14px;font:12px Arial,sans-serif;line-height:1.55;color:#5c4646;border-radius:0 8px 8px 0}
+.result{margin-top:24px;padding-top:22px;border-top:1px solid #eadcc7}
+.linkitem{padding:14px;border:1px solid #e8d8b8;border-radius:12px;background:#fffaf2;margin-top:10px}
+.linkname{font-weight:bold;margin-bottom:8px}.linkurl{font:12px Arial,sans-serif;overflow-wrap:anywhere;color:#6d4a35;margin-bottom:12px}
+.linkactions{display:flex;gap:8px;flex-wrap:wrap}.linkactions .btn{padding:9px 13px;font:12px Arial,sans-serif}
+footer{text-align:center;padding:28px 12px;color:#9b7b63;font:11px Arial,sans-serif;letter-spacing:1px}
+.cover{min-height:82vh;position:relative;display:flex;align-items:center;justify-content:center;padding:28px 16px;background:linear-gradient(135deg,#2a3026,#4b1020 55%,#6c2b35);overflow:hidden}
+.cover:before,.cover:after{content:"";position:absolute;width:320px;height:320px;border:1px solid #d7b36a55;border-radius:50%;pointer-events:none}
+.cover:before{top:-140px;left:-100px;box-shadow:0 0 0 22px #d7b36a0d,0 0 0 44px #d7b36a0d}
+.cover:after{bottom:-170px;right:-90px;box-shadow:0 0 0 22px #d7b36a0d,0 0 0 44px #d7b36a0d}
+.invite-card{position:relative;z-index:1;width:min(760px,100%);padding:clamp(24px,6vw,58px);text-align:center;color:#fff7e8;border:1px solid #d7b36a99;outline:1px solid #d7b36a55;outline-offset:8px;background:linear-gradient(145deg,#4b1020ee,#27362dee);box-shadow:0 20px 70px #0005}
+.flower{font-size:30px;color:var(--gold);margin-bottom:14px}
+.invite-card .script{font-style:italic;color:#f2dca8;font-size:clamp(16px,3vw,22px)}
+.invite-card h1{font-size:clamp(38px,8vw,72px);font-weight:normal;line-height:1.05;margin:18px 0;color:#f7dfaa}
+.invite-card .amp{font-style:italic;color:#fff8ed;font-size:30px}
+.invite-card .date{margin:22px auto 26px;color:#f4e6d2;letter-spacing:2px;font:12px Arial,sans-serif;line-height:1.9}
+.invite-card .btn{margin-top:4px}
+.section{padding:54px 18px;text-align:center}
+.section:nth-child(odd){background:#fffaf2}
+.section:nth-child(even){background:#f5ead8}
+.section .ornament{color:#ad8244;font-size:22px;margin-bottom:12px}
+.section h2{font-weight:normal;font-size:clamp(27px,5vw,40px);color:var(--wine);margin-bottom:14px}
+.section p{max-width:680px;margin:0 auto 14px;line-height:1.8;color:#59464a}
+.couple{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px;margin:28px auto 0}
+.person{border:1px solid #e2cfad;border-radius:16px;padding:22px;background:#fffdf8}
+.person .monogram{width:72px;height:72px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--gold);color:var(--wine);font-size:25px;background:#fbf0dd}
+.person h3{font-size:25px;font-weight:normal;color:var(--wine);margin-bottom:8px}
+.events{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin:28px auto 0}
+.event{padding:22px 14px;border:1px solid #dfc89e;background:#fffaf1;border-radius:14px}
+.event .symbol{font-size:24px;color:#a87936}.event h3{font-weight:normal;color:var(--wine);margin:12px 0 8px;font-size:21px}.event p{font-size:13px;line-height:1.6;margin:0}
+.guestbox{max-width:680px;margin:24px auto 0;padding:24px;border:1px solid #d9bd83;background:#fffdf8;border-radius:14px}
+.guestbox .guestname{font-size:clamp(24px,5vw,38px);font-style:italic;color:var(--wine);margin:10px 0 16px}
+.custom-message{white-space:pre-wrap;line-height:1.8}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:850px;margin:25px auto 0}
+.menu-item{padding:20px 10px;border-radius:12px;border:1px solid #e0ccaa;background:#fffaf2}.menu-item strong{display:block;color:var(--wine);margin-bottom:8px;font-size:18px}.menu-item span{font:12px Arial,sans-serif;color:#79656a;line-height:1.6}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;margin:26px auto 0}
+.gallery img{width:100%;height:210px;object-fit:cover;border-radius:12px;border:3px solid #fff;box-shadow:0 4px 18px #3e1a1718}
+.thanks{background:var(--wine);color:#fff8ed;padding:45px 18px;text-align:center}.thanks h2{font-weight:normal;color:#f1d69b;font-size:34px}.thanks p{line-height:1.7;color:#f5e6d5}
+.sticky-top{position:sticky;top:0;z-index:5}
+@media(max-width:650px){.grid,.mode-cards,.couple,.events,.menu-grid{grid-template-columns:1fr}.formbody{padding:20px 16px}.panel-head{padding:23px 18px}.gallery{grid-template-columns:1fr 1fr}.gallery img{height:150px}.topbar{padding:13px 16px}.brand{font-size:17px}.section{padding:42px 15px}}
+</style>
+</head>
+<body>
+<header class="topbar sticky-top">
+  <div class="brand">EVERAFTER <small>WEDDING INVITATIONS</small></div>
+  <div class="pill" id="topPill">PERSONAL INVITATION STUDIO</div>
+</header>
+
+<main id="generatorView" class="page">
+  <section class="panel">
+    <div class="panel-head">
+      <div class="eyebrow">A little link, a lifetime memory</div>
+      <h1>Create a personal wedding invitation</h1>
+      <p>Enter your guests’ names, choose a message style, generate a unique link, then copy it or share it on WhatsApp.</p>
+    </div>
+    <div class="formbody">
+      <div class="note"><strong>How it works:</strong> The wedding details below are sample details in this demo. Update the WEDDING settings in the code once for your actual wedding. Guest names and custom messages are carried in the generated link; nothing is saved to a database.</div>
+      <div class="field" style="margin-top:22px">
+        <label for="guestNames">GUEST NAME(S)</label>
+        <textarea id="guestNames" placeholder="Example: Rahul Sharma&#10;Ananya Verma&#10;Mr. Amit & Family"></textarea>
+        <div class="hint">Enter one guest per line, or separate names with commas. A separate link will be created for each name.</div>
+      </div>
+
+      <label>CHOOSE YOUR MESSAGE STYLE</label>
+      <div class="mode-cards">
+        <label class="mode-card" for="modeReady">
+          <input type="radio" id="modeReady" name="mode" value="ready" checked>
+          <span><strong>Ready-made invitation</strong>Use our beautifully written invitation. Just enter the guest name; the wedding details stay the same.</span>
+        </label>
+        <label class="mode-card" for="modeCustom">
+          <input type="radio" id="modeCustom" name="mode" value="custom">
+          <span><strong>Write my own message</strong>Personalize the invitation and add a special note for a close friend or family member.</span>
+        </label>
+      </div>
+
+      <div id="customFields" class="hidden">
+        <div class="field">
+          <label for="customGreeting">INVITATION MESSAGE / DESCRIPTION</label>
+          <textarea id="customGreeting" placeholder="Write the invitation message you want this guest to receive..."></textarea>
+          <div class="hint">This replaces the ready-made invitation paragraph for this link. Wedding event details remain the same.</div>
+        </div>
+        <div class="field">
+          <label for="customNote">SPECIAL PERSONAL NOTE (OPTIONAL)</label>
+          <textarea id="customNote" placeholder="Example: Your presence would mean so much to us. Hope you can celebrate with us!"></textarea>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn" id="generateBtn">✦ Generate Invitation Links</button>
+        <button class="btn ghost" id="clearBtn" type="button">Clear fields</button>
+      </div>
+      <div id="results" class="result hidden">
+        <h2 style="font-weight:normal;color:#4b1020;margin-bottom:6px">Your invitation links</h2>
+        <p class="hint">Each link opens the same wedding invitation with the guest’s name and selected message.</p>
+        <div id="linkList"></div>
+        <div class="btnrow"><button class="btn secondary" id="copyAllBtn" type="button">Copy all links</button></div>
+      </div>
+    </div>
+  </section>
+  <footer>MADE WITH LOVE · A PERSONAL INVITATION FOR EVERY GUEST</footer>
+</main>
+
+<main id="invitationView" class="hidden">
+  <section class="cover" id="home">
+    <div class="invite-card">
+      <div class="flower">✧ ❀ ✧</div>
+      <div class="script">Together with our families,</div>
+      <p style="margin:8px 0 0;color:#f6e7d1">we joyfully invite you to celebrate the wedding of</p>
+      <h1 id="coverCouple">Aarav <span class="amp">&</span> Diya</h1>
+      <div class="date" id="coverDate">SATURDAY · 12 DECEMBER 2026<br>GUWAHATI, ASSAM</div>
+      <button class="btn" onclick="document.getElementById('welcome').scrollIntoView({behavior:'smooth'})">Open Invitation ↓</button>
+    </div>
+  </section>
+
+  <section class="section" id="welcome">
+    <div class="ornament">❦</div><div class="eyebrow">A celebration of love</div>
+    <h2>With love, we invite you</h2>
+    <div class="guestbox">
+      <div style="font:11px Arial,sans-serif;letter-spacing:2px;color:#9c7842">DEAR</div>
+      <div class="guestname" id="guestDisplay">Guest & Family</div>
+      <p id="invitationParagraph">Together with our families, we warmly invite you and your family to bless the beginning of our new journey. Please join us as we celebrate love, laughter, and a lifetime of togetherness.</p>
+      <p class="custom-message hidden" id="specialNote"></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="ornament">✧</div><h2>The Bride & Groom</h2>
+    <p>Two hearts, one beautiful journey. We would be honoured to have you with us on our special day.</p>
+    <div class="couple">
+      <div class="person"><div class="monogram">A</div><h3 id="bridegroom1">Aarav Sharma</h3><p style="font-size:13px;margin-bottom:0">The Groom</p></div>
+      <div class="person"><div class="monogram">D</div><h3 id="bridegroom2">Diya Das</h3><p style="font-size:13px;margin-bottom:0">The Bride</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="ornament">❧</div><h2>Save the Date</h2>
+    <p id="dateDescription">Saturday, 12 December 2026 · Guwahati, Assam</p>
+    <div class="events">
+      <div class="event"><div class="symbol">☼</div><h3 id="event1Name">Haldi</h3><p id="event1Details">11:00 AM<br>12 December 2026</p></div>
+      <div class="event"><div class="symbol">✿</div><h3 id="event2Name">Wedding Ceremony</h3><p id="event2Details">6:00 PM onwards<br>12 December 2026</p></div>
+      <div class="event"><div class="symbol">✧</div><h3 id="event3Name">Reception</h3><p id="event3Details">7:00 PM<br>13 December 2026</p></div>
+    </div>
+    <div class="guestbox"><div class="eyebrow">Venue</div><h3 id="venueName" style="font-size:24px;font-weight:normal;color:#4b1020;margin:10px 0">The Royal Garden</h3><p id="venueAddress">Guwahati, Assam, India</p></div>
+  </section>
+
+  <section class="section">
+    <div class="ornament">❀</div><h2>A Feast to Remember</h2><p>Good food, happy hearts, and wonderful memories await.</p>
+    <div class="menu-grid">
+      <div class="menu-item"><strong>Welcome & Starters</strong><span>Welcome drinks · Paneer tikka<br>Assorted snacks</span></div>
+      <div class="menu-item"><strong>Main Course</strong><span>Seasonal curries · Dal<br>Rice · Assorted breads</span></div>
+      <div class="menu-item"><strong>Sweets & More</strong><span>Traditional sweets<br>Desserts · Tea & coffee</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="ornament">♡</div><h2>Moments & Memories</h2><p>May this celebration be filled with warmth, blessings, and memories to cherish forever.</p>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Wedding ceremony floral decor" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=85" alt="Wedding celebration" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=85" alt="Wedding table decor" loading="lazy">
+    </div>
+  </section>
+
+  <section class="thanks">
+    <div class="flower">✧ ❀ ✧</div><h2>We can’t wait to celebrate with you</h2>
+    <p id="lastGuest">Dear Guest & Family, your presence will make our day even more special.</p>
+    <p>With love and warm wishes,<br><strong id="familySignoff" style="color:#f1d69b;font-size:19px;font-weight:normal">The Sharma & Das Families</strong></p>
+    <button class="btn ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="color:#f4dfb3;border-color:#d7b36a">Back to top ↑</button>
+  </section>
+  <footer>AN INVITATION FROM THE HEART · EVERAFTER</footer>
+</main>
+
+<script>
+/* ============================================================
+   EDIT THESE DETAILS ONCE FOR THE ACTUAL WEDDING.
+   The guest name and optional custom text are added to each URL.
+   No database or backend is used.
+   ============================================================ */
+const WEDDING = {
+  groom: "Aarav Sharma",
+  bride: "Diya Das",
+  groomShort: "Aarav",
+  brideShort: "Diya",
+  dateLine: "SATURDAY · 12 DECEMBER 2026",
+  locationShort: "GUWAHATI, ASSAM",
+  dateDescription: "Saturday, 12 December 2026 · Guwahati, Assam",
+  event1Name: "Haldi",
+  event1Details: "11:00 AM<br>12 December 2026",
+  event2Name: "Wedding Ceremony",
+  event2Details: "6:00 PM onwards<br>12 December 2026",
+  event3Name: "Reception",
+  event3Details: "7:00 PM<br>13 December 2026",
+  venueName: "The Royal Garden",
+  venueAddress: "Guwahati, Assam, India",
+  familySignoff: "The Sharma & Das Families",
+  readyMessage: "Together with our families, we warmly invite you and your family to bless the beginning of our new journey. Please join us as we celebrate love, laughter, and a lifetime of togetherness."
+};
+
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(window.location.search);
+const isInvitation = params.get("view") === "invite";
+
+function showCorrectView(){
+  if(isInvitation){
+    $("generatorView").classList.add("hidden");
+    $("invitationView").classList.remove("hidden");
+    $("topPill").textContent = "YOU ARE INVITED";
+    renderInvitation();
+  } else {
+    $("generatorView").classList.remove("hidden");
+    $("invitationView").classList.add("hidden");
+    $("topPill").textContent = "PERSONAL INVITATION STUDIO";
+  }
+}
+
+function safeText(el, value){ el.textContent = value || ""; }
+function renderInvitation(){
+  let guest = params.get("guest") || "Guest";
+  const mode = params.get("mode") || "ready";
+  let message = WEDDING.readyMessage;
+  let note = "";
+  try{
+    if(mode === "custom"){
+      message = decodeURIComponent(escape(atob((params.get("msg") || "").replace(/-/g,"+").replace(/_/g,"/"))));
+    }
+  }catch(e){ message = WEDDING.readyMessage; }
+  try{
+    note = decodeURIComponent(escape(atob((params.get("note") || "").replace(/-/g,"+").replace(/_/g,"/"))));
+  }catch(e){ note = ""; }
+
+  safeText($("coverCouple"), WEDDING.groomShort + " & " + WEDDING.brideShort);
+  safeText($("coverDate"), WEDDING.dateLine + "\n" + WEDDING.locationShort);
+  $("coverDate").innerHTML = WEDDING.dateLine + "<br>" + WEDDING.locationShort;
+  safeText($("guestDisplay"), guest + (/\bfamily\b/i.test(guest) ? "" : " & Family"));
+  safeText($("invitationParagraph"), message || WEDDING.readyMessage);
+  safeText($("bridegroom1"), WEDDING.groom);
+  safeText($("bridegroom2"), WEDDING.bride);
+  safeText($("dateDescription"), WEDDING.dateDescription);
+  safeText($("event1Name"), WEDDING.event1Name);
+  $("event1Details").innerHTML = WEDDING.event1Details;
+  safeText($("event2Name"), WEDDING.event2Name);
+  $("event2Details").innerHTML = WEDDING.event2Details;
+  safeText($("event3Name"), WEDDING.event3Name);
+  $("event3Details").innerHTML = WEDDING.event3Details;
+  safeText($("venueName"), WEDDING.venueName);
+  safeText($("venueAddress"), WEDDING.venueAddress);
+  safeText($("familySignoff"), WEDDING.familySignoff);
+  safeText($("lastGuest"), "Dear " + guest + (/\bfamily\b/i.test(guest) ? "" : " & Family") + ", your presence will make our day even more special.");
+  if(note.trim()){ $("specialNote").textContent = note; $("specialNote").classList.remove("hidden"); }
+}
+
+function base64url(str){
+  const bytes = new TextEncoder().encode(str);
+  let binary = "";
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function getBaseUrl(){
+  const u = new URL(window.location.href);
+  u.search = ""; u.hash = "";
+  return u;
+}
+function makeInviteUrl(guest, mode, msg, note){
+  const u = getBaseUrl();
+  u.searchParams.set("view","invite");
+  u.searchParams.set("guest",guest);
+  u.searchParams.set("mode",mode);
+  if(mode === "custom" && msg.trim()) u.searchParams.set("msg",base64url(msg.trim()));
+  if(mode === "custom" && note.trim()) u.searchParams.set("note",base64url(note.trim()));
+  return u.toString();
+}
+function splitNames(raw){
+  return raw.split(/\n|,/).map(x=>x.trim()).filter(Boolean);
+}
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function makeLinkCard(name,url){
+  const div = document.createElement("div");
+  div.className = "linkitem";
+  div.innerHTML = `<div class="linkname">${escapeHtml(name)}</div><div class="linkurl">${escapeHtml(url)}</div><div class="linkactions"><button class="btn secondary copyOne" type="button">Copy link</button><button class="btn shareOne" type="button">Share on WhatsApp</button></div>`;
+  div.querySelector(".copyOne").addEventListener("click",async()=>{
+    const ok = await copyText(url);
+    div.querySelector(".copyOne").textContent = ok ? "Copied ✓" : "Select & copy";
+  });
+  div.querySelector(".shareOne").addEventListener("click",()=>{
+    window.open("https://wa.me/?text="+encodeURIComponent("You are warmly invited to our wedding 💍\n"+url),"_blank");
+  });
+  return div;
+}
+async function copyText(text){
+  try{ await navigator.clipboard.writeText(text); return true; }
+  catch(e){
+    const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand("copy")}catch(err){}ta.remove();return ok;
+  }
+}
+$("modeReady").addEventListener("change",()=> $("customFields").classList.toggle("hidden",!$("modeCustom").checked));
+$("modeCustom").addEventListener("change",()=> $("customFields").classList.toggle("hidden",!$("modeCustom").checked));
+$("clearBtn").addEventListener("click",()=>{
+  $("guestNames").value="";$("customGreeting").value="";$("customNote").value="";
+  $("modeReady").checked=true;$("customFields").classList.add("hidden");
+  $("results").classList.add("hidden");$("linkList").replaceChildren();
+});
+$("generateBtn").addEventListener("click",()=>{
+  const names=splitNames($("guestNames").value);
+  if(!names.length){alert("Please enter at least one guest name.");$("guestNames").focus();return;}
+  const mode=$("modeCustom").checked?"custom":"ready";
+  const msg=$("customGreeting").value.trim();
+  const note=$("customNote").value.trim();
+  if(mode==="custom" && !msg){alert("Please write your personal invitation message.");$("customGreeting").focus();return;}
+  $("linkList").replaceChildren();
+  names.forEach(name=>{
+    const url=makeInviteUrl(name,mode,msg,note);
+    $("linkList").appendChild(makeLinkCard(name,url));
+  });
+  $("results").classList.remove("hidden");
+  $("results").scrollIntoView({behavior:"smooth",block:"start"});
+});
+$("copyAllBtn").addEventListener("click",async()=>{
+  const text=[...$("linkList").querySelectorAll(".linkitem")].map(card=>card.querySelector(".linkname").textContent+"\n"+card.querySelector(".linkurl").textContent).join("\n\n");
+  const ok=await copyText(text);$("copyAllBtn").textContent=ok?"All links copied ✓":"Copy failed — copy links individually";
+});
+showCorrectView();
+</script>
+</body>
+</html>
 
