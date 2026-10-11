@@ -578,13 +578,15 @@ function showPage(number) {
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
+}
 function openInvitation() {
   showPage(2);
   createPetals();
   playCelebrationSound();
+  startWeddingCelebration();
 }
+
 
 /* =========================================
    FALLING FLOWERS
